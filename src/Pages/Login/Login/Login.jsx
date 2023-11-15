@@ -1,23 +1,22 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from"react";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
-} from "react-simple-captcha";
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
-import Swal from "sweetalert2";
+} from"react-simple-captcha";
+import { AuthContext } from"../../../AuthProvider/AuthProvider";
+import { Link, useLocation, useNavigate } from"react-router-dom";
+import { Helmet } from"react-helmet-async";
+import Swal from"sweetalert2";
 
 const Login = () => {
-
   const [disabled, setDisabled] = useState(true);
   const { loggedIn } = useContext(AuthContext);
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
-
+  console.log("state in the location login page", location.state);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -25,10 +24,10 @@ const Login = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    const from = event.target;
-    const email = from.email.value;
-    const password = from.password.value;
-   
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
     // console.log(login);
     loggedIn(email, password)
       .then((res) => {
@@ -45,13 +44,13 @@ const Login = () => {
           },
           hideClass: {
             popup: `
-      animate__animated
-      animate__fadeOutDown
+            animate__animated
+            animate__fadeOutDown
       animate__faster
     `,
           },
         });
-        navigate(from, {replace:true});
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -121,8 +120,9 @@ const Login = () => {
                 <button className="btn btn-outline">Validate</button>
               </div>
               <div className="form-control mt-6">
+                {/* todo: disabled */}
                 <input
-                  disabled={disabled}
+                  disabled={false}
                   className="btn btn-primary"
                   type="submit"
                   value="Submit"
@@ -130,7 +130,7 @@ const Login = () => {
               </div>
               <div>
                 <p>
-                  Your New From Here Please
+                  Your New formHere Please
                   <button className="btn btn-outline btn-primary ml-4">
                     <Link to={"/signUp"}>SignUp</Link>
                   </button>

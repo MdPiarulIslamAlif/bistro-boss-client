@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { FaBabyCarriage } from "react-icons/fa";
+import useCarts from "../../Hook/useCarts";
 
 const Navbar = () => {
 
   const {user, logOUt} = useContext(AuthContext);
+  const [cart] = useCarts();
 
   const handleLogOut =()=>{
     logOUt()
@@ -33,21 +36,14 @@ const Navbar = () => {
         <NavLink to={"/signUp"}>SignUp</NavLink>
       </li>
 
-      {user ? (
-        <>
-          <li>
-            <button onClick={handleLogOut} className="btn btn-ghost">
-              LogOut
-            </button>
-          </li>
-        </>
-      ) : (
-        <>
-          <li>
-            <NavLink to={"/login"}>Login</NavLink>
-          </li>
-        </>
-      )}
+      <li>
+        <NavLink to={"/"}>
+          <button className="flex gap-2">
+            <FaBabyCarriage />
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </button>
+        </NavLink>
+      </li>
     </>
   );
 
@@ -81,6 +77,33 @@ const Navbar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navLink}</ul>
+        </div>
+        <div>
+          {user ? (
+            <>
+                <div className="flex items-center ml-4">
+                  <div>
+                    <button onClick={handleLogOut}>LogOut</button>
+                  </div>
+                  <div>
+                    <div className="avatar online">
+                      <div className="w-12 rounded-full ml-6">
+                        <img src={user.photoUrl} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ml-8">
+                    <span>{user.displayName} </span>
+                  </div>
+                </div>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink to={"/login"}>Login</NavLink>
+              </li>
+            </>
+          )}
         </div>
         <div className="navbar-end">
           <a className="btn">Get Started</a>
