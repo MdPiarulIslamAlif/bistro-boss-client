@@ -1,16 +1,16 @@
-
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
-
-
+import useAxiosPublic from "../../Hook/useAxiosPublic";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
   const { createUser, updateUserProfile } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,29 +20,33 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     createUser(data.email, data.password)
-    .then((result) => {
-      const loggedUser = result.user;
-      updateUserProfile(data.name, data.photoUrl)
-      .then(()=>{
-        reset();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "User Created successfully...",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/")
-
-      }) 
-      .catch()
-
-
-    })
-    .catch(error=>{
-      console.log(error);
-    })
-   
+      .then((result) => {
+        const loggedUser = result.user;
+        updateUserProfile(data.name, data.photoUrl)
+          .then(() => {
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+            };
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "User Created successfully...",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
+            });
+          })
+          .catch();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   //  console.log(watch("example"));
 
@@ -147,6 +151,8 @@ const SignUp = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">SignUp</button>
               </div>
+              <div className="divider">OR</div>
+              <SocialLogin></SocialLogin>
               <div>
                 <p className="flex items-center">
                   You Have an Account Please

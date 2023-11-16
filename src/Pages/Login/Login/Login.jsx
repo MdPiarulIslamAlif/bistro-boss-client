@@ -8,12 +8,16 @@ import { AuthContext } from"../../../AuthProvider/AuthProvider";
 import { Link, useLocation, useNavigate } from"react-router-dom";
 import { Helmet } from"react-helmet-async";
 import Swal from"sweetalert2";
+import SocialLogin from "../../../Components/SocialLogin/SocialLogin";
+
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
   const { loggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+ 
 
   const from = location.state?.from?.pathname || "/";
   console.log("state in the location login page", location.state);
@@ -128,6 +132,8 @@ const Login = () => {
                   value="Submit"
                 />
               </div>
+              <div className="divider">OR</div>
+              <SocialLogin></SocialLogin>
               <div>
                 <p>
                   Your New formHere Please

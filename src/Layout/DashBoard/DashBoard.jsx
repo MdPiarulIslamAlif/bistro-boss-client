@@ -1,45 +1,103 @@
-import { FaBabyCarriage, FaBookMedical, FaMoneyBill, FaStreetView } from "react-icons/fa";
+import {
+  FaAd,
+  FaBabyCarriage,
+  FaBook,
+  FaBookMedical,
+  FaList,
+  FaMoneyBill,
+  FaStreetView,
+  FaUsers,
+  FaUtensils,
+} from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
-import { FcHome, FcMenu } from "react-icons/fc";
+import { FcContacts, FcHome, FcMenu } from "react-icons/fc";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import { VscPreview } from "react-icons/vsc";
-import { MdOutlineStore } from "react-icons/md";
+import { MdOutlineSignalWifiStatusbar4Bar, MdOutlineStore } from "react-icons/md";
+import useCarts from "../../Hook/useCarts";
 
 const DashBoard = () => {
+  const [cart] = useCarts();
+  // TODO:get isAdmin value form the database;
+  const isAdmin = true;
   return (
     <div className="flex">
       <div className="w-64 min-h-screen bg-orange-400">
         <ul className="menu">
-          <li>
-            <NavLink to={"/dashboard/userHome"}>
-              <FcHome />
-              User Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard/reservation"}>
-              <MdOutlineStore />
-              Reservation
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard/cart"}>
-              <FaBabyCarriage />
-              My Cart
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard/review"}>
-              <FaStreetView />
-              Add Review
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/dashboard/booking"}>
-              <BsFillJournalBookmarkFill />
-              My Booking
-            </NavLink>
-          </li>
+          {isAdmin ? (
+            <>
+              <li>
+                <NavLink to={"/dashboard/adminHome"}>
+                  <FcHome />
+                  Admin Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/addItem"}>
+                  <FaUtensils />
+                  Add Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/manageItem"}>
+                  <FaList />
+                  Manage Items {cart.length}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/review"}>
+                  <FaStreetView />
+                  Add Review
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/manageBooking"}>
+                  <FaBook />
+                  Manage Booking
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/users"}>
+                  <FaUsers />
+                  All users
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink to={"/dashboard/userHome"}>
+                  <FcHome />
+                  User Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/reservation"}>
+                  <MdOutlineStore />
+                  Reservation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/cart"}>
+                  <FaBabyCarriage />
+                  My Cart {cart.length}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/review"}>
+                  <FaStreetView />
+                  Add Review
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/dashboard/booking"}>
+                  <BsFillJournalBookmarkFill />
+                  My Booking
+                </NavLink>
+              </li>
+            </>
+          )}
+          {/* shared nav links */}
           <div className="divider">OR</div>
           <li>
             <NavLink to={"/"}>
@@ -51,6 +109,12 @@ const DashBoard = () => {
             <NavLink to={"/order/salad"}>
               <FcMenu />
               Menu
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/order/Contact"}>
+              <FcContacts />
+              Contact
             </NavLink>
           </li>
         </ul>

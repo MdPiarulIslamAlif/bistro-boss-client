@@ -1,11 +1,12 @@
 import { FaDove, FaTrash } from "react-icons/fa";
 import useCarts from "../../../Hook/useCarts";
 import Swal from "sweetalert2";
+import useAxiosSequre from "../../../Hook/useAxiosSequre";
 
 const Cart = () => {
-  const [cart] = useCarts();
+  const [cart, refetch] = useCarts();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
-
+  const axiosSecure = useAxiosSequre();
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -17,10 +18,15 @@ const Cart = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          // title: "Deleted!",
-          // text: "Your file has been deleted.",
-          // icon: "success",
+        axiosSecure.delete(`/carts/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
         });
       }
     });
