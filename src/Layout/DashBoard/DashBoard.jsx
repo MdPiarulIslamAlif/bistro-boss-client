@@ -15,11 +15,12 @@ import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import { VscPreview } from "react-icons/vsc";
 import { MdOutlineSignalWifiStatusbar4Bar, MdOutlineStore } from "react-icons/md";
 import useCarts from "../../Hook/useCarts";
+import useAdmin from "../../Hook/useAdmin";
 
 const DashBoard = () => {
   const [cart] = useCarts();
   // TODO:get isAdmin value form the database;
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <div className="flex">
       <div className="w-64 min-h-screen bg-orange-400">
