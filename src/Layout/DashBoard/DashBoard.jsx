@@ -34,7 +34,7 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={"/dashboard/addItem"}>
+                <NavLink to={"/dashboard/addItems"}>
                   <FaUtensils />
                   Add Items
                 </NavLink>
@@ -42,7 +42,7 @@ const DashBoard = () => {
               <li>
                 <NavLink to={"/dashboard/manageItem"}>
                   <FaList />
-                  Manage Items {cart.length}
+                  Manage Items
                 </NavLink>
               </li>
               <li>
@@ -73,9 +73,9 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={"/dashboard/reservation"}>
+                <NavLink to={"/dashboard/history"}>
                   <MdOutlineStore />
-                  Reservation
+                  History
                 </NavLink>
               </li>
               <li>
@@ -91,9 +91,9 @@ const DashBoard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={"/dashboard/booking"}>
+                <NavLink to={"/dashboard/paymentHistory"}>
                   <BsFillJournalBookmarkFill />
-                  My Booking
+                  Payment Real History
                 </NavLink>
               </li>
             </>

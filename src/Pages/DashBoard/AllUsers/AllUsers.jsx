@@ -59,11 +59,6 @@ const AllUsers = () => {
 
   return (
     <div>
-      <div className="flex justify-even my-4">
-        <h2 className="text-3xl"> this is all users</h2>
-        <h2 className="text-3xl"> Total users: {users.length}</h2>
-      </div>
-
       <div className="overflow-x-auto">
         <table className="table table-zebra ">
           {/* head */}
